@@ -1,9 +1,5 @@
-const socials = [
-  ["TikTok", "https://www.tiktok.com/@fakallen", "♪"],
-  ["YouTube", "https://www.youtube.com/@Fakallen", "▶"],
-  ["Instagram", "https://www.instagram.com/fakallen.tv/", "◎"],
-  ["Twitch", "https://www.twitch.tv/fakallen", "▣"],
-];
+import { SiDiscord, SiInstagram, SiKick, SiTiktok, SiTwitch, SiYoutube } from "react-icons/si";
+import styles from "./social-buttons.module.css";
 
 export default function Home() {
   return (
@@ -18,10 +14,15 @@ export default function Home() {
           <h1>LA TABERNA<br/><em>DE FAKA</em></h1>
           <p className="tagline">Donde siempre hay una silla libre<br/>para un aventurero.</p>
           <div className="actions">
-            <a className="button" style={{ background: "#226d20", borderColor: "#73e51d", color: "#f5ffe9" }} href="https://kick.com/fakallen" target="_blank" rel="noreferrer">K ENTRAR A KICK</a>
-            <a className="button discord" href="https://discord.gg/ApcQwgcGPF" target="_blank" rel="noreferrer">☯ UNIRME AL DISCORD</a>
+            <a className={`button ${styles.primaryButton} ${styles.kickButton}`} href="https://kick.com/fakallen" target="_blank" rel="noreferrer"><SiKick aria-hidden="true" /> <span>ENTRAR A KICK</span></a>
+            <a className={`button ${styles.primaryButton} ${styles.discordButton}`} href="https://discord.gg/ApcQwgcGPF" target="_blank" rel="noreferrer"><SiDiscord aria-hidden="true" /> <span>UNIRME AL DISCORD</span></a>
           </div>
-          <div className="socials">{socials.map(([name, href, icon]) => <a key={name} href={href} target="_blank" rel="noreferrer"><b>{icon}</b>{name}</a>)}</div>
+          <div className="socials">
+            <a href="https://www.tiktok.com/@fakallen" target="_blank" rel="noreferrer"><SiTiktok className={styles.tiktok} aria-hidden="true" />TikTok</a>
+            <a href="https://www.youtube.com/@Fakallen" target="_blank" rel="noreferrer"><SiYoutube className={styles.youtube} aria-hidden="true" />YouTube</a>
+            <a href="https://www.instagram.com/fakallen.tv/" target="_blank" rel="noreferrer"><SiInstagram className={styles.instagram} aria-hidden="true" />Instagram</a>
+            <a href="https://www.twitch.tv/fakallen" target="_blank" rel="noreferrer"><SiTwitch className={styles.twitch} aria-hidden="true" />Twitch</a>
+          </div>
         </div>
       </section>
 
