@@ -33,7 +33,7 @@ export default function Home() {
         </section>
 
         <div className="grid">
-          <section className="panel" id="carta"><p className="eyebrow">PARA LA COMUNIDAD</p><h2>📜 Carta de la Taberna</h2><div className="menu"><a href="https://kick.com/fakallen" target="_blank" rel="noreferrer">🍺 <span><b>Trago del día</b><small>Descubrilo en el próximo directo</small></span></a><a href="/cocteles">📖 <span><b>Libro de Cócteles</b><small>Abrí el recetario del barman</small></span></a><a href="mailto:contacto.fakallen@gmail.com">🎁 <span><b>Donaciones y pedidos</b><small>Mandá tu cuervo al tabernero</small></span></a></div></section>
+          <section className="panel" id="carta"><p className="eyebrow">PARA LA COMUNIDAD</p><h2>📜 Carta de la Taberna</h2><div className="menu"><a href="/truco">🎴 <span><b>La Mesa de Truco</b><small>Sentate a la mesa y desafiá al Tabernero</small></span></a><a href="/cocteles">📖 <span><b>Libro de Cócteles</b><small>Abrí el recetario del barman</small></span></a><a href="mailto:contacto.fakallen@gmail.com">🎁 <span><b>Donaciones y pedidos</b><small>Mandá tu cuervo al tabernero</small></span></a></div></section>
           <section className="panel"><p className="eyebrow">MOMENTOS DE AVENTURA</p><h2>🎬 Clips destacados</h2><div className="clips"><a href="https://www.tiktok.com/@fakallen" target="_blank" rel="noreferrer"><span>▶</span><b>TikTok</b></a><a href="https://www.youtube.com/@Fakallen" target="_blank" rel="noreferrer"><span>▶</span><b>YouTube</b></a><a href="https://kick.com/fakallen" target="_blank" rel="noreferrer"><span>▶</span><b>Kick</b></a></div></section>
         </div>
 
