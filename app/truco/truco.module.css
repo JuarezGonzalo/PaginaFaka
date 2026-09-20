@@ -66,6 +66,18 @@
 .difficultyDescription { min-height: 45px; margin: 9px 0 7px; color: #c7b190; font-size: 11px; line-height: 1.5; }
 .difficultyLock { margin: 0 0 12px; color: #a58d6e; font-size: 10px; line-height: 1.4; }
 
+.quickRules { width: 100%; min-height: 44px; margin-top: 10px; padding: 8px; border: 1px solid #71502d; color: #dfbc83; background: #130c08; font: 700 10px Cinzel, serif; cursor: pointer; }
+.quickRules:hover, .bookTrigger:hover { border-color: #c38d45; background-color: #2d1b0e; }
+.quickRules:focus-visible, .bookTrigger:focus-visible { outline: 2px solid #f2bd68; outline-offset: 3px; }
+.bookTrigger { display: flex; align-items: center; gap: 14px; width: 100%; margin-top: 14px; padding: 16px 12px; border: 1px solid #8d622f; color: #e8c793; background: linear-gradient(135deg, #362110, #170e08); text-align: left; cursor: pointer; }
+.bookCover { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 57px; height: 78px; border: 1px solid #b28546; border-radius: 2px 6px 6px 2px; box-shadow: inset 5px 0 #170c07, 3px 2px #be9a64, 0 6px 10px #0008; background: linear-gradient(100deg, #211008, #573016, #31190c); color: #d8ad69; font: 700 29px Cinzel, serif; }
+.bookCover small { margin-top: 5px; font: 700 7px Cinzel, serif; letter-spacing: 1px; }
+.bookTrigger > span:last-child { min-width: 0; }
+.bookTrigger b { display: block; font: 700 15px Cinzel, serif; }
+.bookTrigger > span:last-child > small { display: block; margin-top: 7px; color: #c0a886; font: 11px/1.5 Inter, sans-serif; }
+.bookTrigger em { display: block; margin-top: 10px; color: #e2b064; font: normal 700 9px Cinzel, serif; }
+@media (min-width: 781px) and (max-width: 1200px) { .bookTrigger { grid-column: 2 / 4; } }
+
 /* Independent regions: expanding a guide never stretches the playing surface. */
 .room {
   grid-template-columns: 290px minmax(0, 1fr) 290px;

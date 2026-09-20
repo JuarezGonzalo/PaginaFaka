@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import Link from "next/link";
 import { SiKick } from "react-icons/si";
 import {
@@ -9,6 +9,7 @@ import {
   suitSymbol, trucoLabels, type Player, type TrickResult, type TrucoCard,
 } from "./game-engine";
 import styles from "./truco.module.css";
+import RuleBook from "./rule-book";
 
 function Card({ card, onPlay, disabled = false, played = false }: { card: TrucoCard; onPlay?: () => void; disabled?: boolean; played?: boolean }) {
   const content = (
@@ -39,11 +40,12 @@ const resultLabel: Record<TrickResult, string> = { human: "Tuya", bot: "Taberner
 
 export default function TrucoPage() {
   const [game, dispatch] = useReducer(gameReducer, undefined, initialGame);
+  const [rulesOpen, setRulesOpen] = useState(false);
   const tableRef = useRef<HTMLElement>(null);
   const { status, score, played, playedTricks, pendingCall, handWinner, message } = game;
 
   useEffect(() => {
-    if (game.status !== "playing") return;
+    if (rulesOpen || game.status !== "playing") return;
     if (isResolving(game) && !game.pendingCall) {
       const timer = window.setTimeout(() => dispatch({ type: "resolve-trick", revision: game.revision }), 1100);
       return () => window.clearTimeout(timer);
@@ -52,7 +54,7 @@ export default function TrucoPage() {
       const timer = window.setTimeout(() => dispatch({ type: "bot-act", revision: game.revision, roll: Math.random() }), 1000);
       return () => window.clearTimeout(timer);
     }
-  }, [game]);
+  }, [game, rulesOpen]);
 
   const envidos = availableEnvidos(game, "human");
   const nextTruco = availableTruco(game, "human");
@@ -106,6 +108,7 @@ export default function TrucoPage() {
           <p id="difficulty-description" className={styles.difficultyDescription}>{difficulties[game.difficulty].description}</p>
           {(status === "playing" || status === "hand-over") && <p className={styles.difficultyLock}>Podés cambiar el nivel al terminar la partida.</p>}
           {status === "idle" && <button className={styles.gameButton} onClick={deal}><span>REPARTIR CARTAS</span><small>JUGAR AHORA</small></button>}
+          <button type="button" className={styles.quickRules} aria-haspopup="dialog" onClick={() => setRulesOpen(true)}>📖 Cómo jugar · Ver reglas</button>
         </aside>
 
         <section ref={tableRef} className={styles.tableChamber} id="mesa" tabIndex={-1} aria-label="Mesa de Truco">
@@ -186,17 +189,12 @@ export default function TrucoPage() {
 
         <aside className={`${styles.woodPanel} ${styles.guides}`}>
           <div className={styles.panelHeading}><span>📖</span><div><small>ANTES DE JUGAR</small><h2>Conocé la mesa</h2></div></div>
+          <button type="button" className={styles.bookTrigger} aria-haspopup="dialog" onClick={() => setRulesOpen(true)}>
+            <span className={styles.bookCover} aria-hidden="true">F<small>TRUCO</small></span>
+            <span><b>Libro de reglas</b><small>Cartas, cantos y secretos de esta mesa.</small><em>Abrir el libro →</em></span>
+          </button>
           {status !== "idle" && <div className={styles.envidoSummary}><small>TUS TANTOS</small><b>{calculateEnvido(game.initialHands.human)}</b><p>{game.envidoResult ?? "Se cuentan las tres cartas que recibiste, incluso las que ya jugaste."}</p></div>}
           <div className={styles.guideCard}><span>📜</span><div><b>Jerarquía activa</b><small>La Espadilla, el Bastillo y los siete bravos ya mandan en la mesa.</small></div></div>
-          <details className={styles.tableRules}>
-            <summary>Reglas de esta mesa</summary>
-            <p>Sin flor. Partida a 30, con 15 malas y 15 buenas.</p>
-            <p>El nivel se elige antes de repartir y se mantiene durante toda la partida. El Tabernero decide con sus cartas, los cantos, el marcador y las cartas visibles de la mesa.</p>
-            <p>Envido + Envido: 4. Con Real Envido: 7. Si rechazás una subida, se cobra lo apostado antes de esa subida.</p>
-            <p>La Falta reemplaza las apuestas anteriores: si ambos están en malas, vale lo que le falta al puntero para llegar a 15; si alguno está en buenas, para llegar a 30.</p>
-            <p>Podés abrir el Envido en tu primer turno antes de tirar, o responder con Envido al primer Truco. Después se retoma el Truco pendiente.</p>
-            <p>Ir al mazo entrega el valor aceptado de la mano. Antes de tu primera carta, sin cantos, también entrega 1 por Envido. Si hay un Envido pendiente, se rechaza antes de cerrar la mano.</p>
-          </details>
           <div className={styles.rankGuide}><small>LAS MÁS BRAVAS</small><b>1 Espada</b><b>1 Basto</b><b>7 Espada</b><b>7 Oro</b><span>3 · 2 · 1 falsas · figuras · 7 falsas · 6 · 5 · 4</span></div>
           <blockquote>“En mi mesa gana el que sabe jugar sus cartas.”<cite>— El Tabernero</cite></blockquote>
           <div className={styles.scorePreview}><small>PARTIDA A 30</small><div><span>AVENTURERO</span><b>{score.human}</b></div><div><span>TABERNERO</span><b>{score.bot}</b></div></div>
@@ -204,6 +202,7 @@ export default function TrucoPage() {
       </section>
 
       <footer className={styles.footer}><span>LA TABERNA DE FAKA · TRUCO SIN FLOR</span><p>Los tantos se cantan. El coraje se demuestra.</p></footer>
+      <RuleBook open={rulesOpen} onClose={() => setRulesOpen(false)} />
     </main>
   );
 }
